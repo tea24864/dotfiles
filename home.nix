@@ -15,7 +15,7 @@ in
     jq 
     lazygit 
     neovim 
-    # Removed nerd-fonts package from here to keep headless VPS lean
+    wezterm
   ]; 
 
   # DISABLED: Your VPS doesn't have an X11/Wayland desktop server to run font configs
@@ -27,6 +27,18 @@ in
     enable = true; 
     autosuggestion.enable = true; 
     syntaxHighlighting.enable = true; 
+
+    # ADD THIS TO FIX NON-INTERACTIVE SSH PATHS:
+    envExtra = ''
+      export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+    '';
+    # This injects the Nix paths during shell compilation. Required for wezterm remote
+    initExtra = ''
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
+    '';
+
     initContent = '' 
       bindkey '^f' autosuggest-accept 
     ''; 

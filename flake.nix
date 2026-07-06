@@ -11,7 +11,7 @@
   };
 
   outputs = inputs@{ self, home-manager, nixpkgs }: {
-    homeConfigurations."timch" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations."ubuntu" = home-manager.lib.homeManagerConfiguration {
       # Sets up standard 64-bit Linux package compilation
       pkgs = nixpkgs.legacyPackages.x86_64-linux; 
       
