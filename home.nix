@@ -32,15 +32,13 @@ in
     envExtra = ''
       export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
     '';
-    # This injects the Nix paths during shell compilation. Required for wezterm remote
-    initExtra = ''
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-      fi
-    '';
 
     initContent = '' 
       bindkey '^f' autosuggest-accept 
+      # This injects the Nix paths during shell compilation. Required for wezterm remote
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
     ''; 
     shellAliases = { 
       ".." = "cd .."; 
