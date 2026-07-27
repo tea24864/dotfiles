@@ -30,7 +30,7 @@ in
 
     # ADD THIS TO FIX NON-INTERACTIVE SSH PATHS:
     envExtra = ''
-      export PATH="$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+      export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
     '';
 
     initContent = '' 
