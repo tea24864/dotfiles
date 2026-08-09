@@ -1,8 +1,8 @@
 { config, pkgs, ... }: 
 
 let 
-  dotfiles = "${config.home.homeDirectory}/.dotfiles"; 
-in 
+  dotfiles = "${config.home.homeDirectory}/.dotfiles";
+in
 { 
   home.username = "timch"; 
   home.homeDirectory = "/home/timch"; 
@@ -14,9 +14,12 @@ in
     fzf 
     jq 
     lazygit 
-    neovim 
-    wezterm
-  ]; 
+    neovim
+    # wezterm is deliberately NOT installed here: it is a GPU-accelerated GUI
+    # app, so on this non-NixOS host it comes from apt (WezTerm's own
+    # apt.fury.io/wez repo), which links against the system Mesa/X11 stack.
+    # Home Manager still manages ~/.config/wezterm below.
+  ];
 
   # DISABLED: Your VPS doesn't have an X11/Wayland desktop server to run font configs
   fonts.fontconfig.enable = false; 
