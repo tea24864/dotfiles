@@ -35,7 +35,6 @@ in
     envExtra = ''
       export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
     '';
-
     initContent = '' 
       bindkey '^f' autosuggest-accept 
       # This injects the Nix paths during shell compilation. Required for wezterm remote
