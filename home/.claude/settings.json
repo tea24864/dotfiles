@@ -21,5 +21,8 @@
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-ansi",
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "enabledPlugins": {
+    "mattpocock-skills@claude-plugins-official": true
+  }
 }

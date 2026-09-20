@@ -33,7 +33,7 @@ in
 
     # ADD THIS TO FIX NON-INTERACTIVE SSH PATHS:
     envExtra = ''
-      export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
+      export PATH="export PATH=$HOME/.opencode/bin:$HOME/.local/bin:$HOME/.nix-profile/bin:/nix/var/nix/profiles/default/bin:$PATH"
     '';
 
     initContent = '' 
@@ -71,6 +71,26 @@ in
       cmd_duration.format = "[$duration]($style) "; 
     }; 
   }; 
+
+  # kirk autologins timch (lightdm `autologin-user`), so the XFCE session - and
+  # with it everything in ~/.config/autostart - comes up at boot with nobody at
+  # the keyboard. That is the hook this entry hangs off: one WezTerm window
+  # whose program is herdr, which reattaches the persistent session rather than
+  # opening an empty shell.
+  #
+  # Both paths are absolute on purpose. The session runs Exec= without a shell,
+  # so ~/.local/bin (where herdr's own updater installs it) is not on PATH, and
+  # /usr/bin/wezterm names the apt build explicitly - the same reason wezterm is
+  # kept out of home.packages. Panes herdr spawns are shells and do read
+  # .zshenv, so only this one line needs the full paths.
+  xdg.configFile."autostart/herdr.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Herdr
+    Comment=Persistent Herdr session in WezTerm
+    Exec=/usr/bin/wezterm start --cwd ${config.home.homeDirectory} -- ${config.home.homeDirectory}/.local/bin/herdr
+    Terminal=false
+  '';
 
   # Symlink setups stay exactly the same.
   # Even if WezTerm isn't running on the server, keeping the symlink here is completely harmless
